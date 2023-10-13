@@ -8,13 +8,29 @@ function validUsername(username) {
   }
 }
 function validPassword(password) {
-  if ((password.length > 9 && password.length < 65) && (((/[a-zA-Z]/).test(password)) && (/\d/).test(password)) &&
-    ((/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/).test(password))) {
-    return true
+  const length = password.length;
+
+  if (length < 10 || length > 64) {
+    return false;
   }
-  else {
-    return false
+
+  let hasLetter = false;
+  let hasNumber = false;
+  let hasSpecialCharacter = false;
+
+  for (let i = 0; i < length; i++) {
+    const char = password[i];
+
+    if (/[a-zA-Z]/.test(char)) {
+      hasLetter = true;
+    } else if (/[0-9]/.test(char)) {
+      hasNumber = true;
+    } else if ('`!@#$%^&*()_\-+=[]{};:\'"\\|,.<>/?~ '.includes(char)) {
+      hasSpecialCharacter = true;
+    }
   }
+
+  return hasLetter && hasNumber && hasSpecialCharacter;
 }
 
 module.exports = { validUsername, validPassword };
